@@ -20,11 +20,23 @@ public class User {
    private String email;
 
    public User() {}
-   
+
+   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+   @PrimaryKeyJoinColumn
+   private Car car;
+
    public User(String firstName, String lastName, String email) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+   }
+
+   public User(String firstName, String lastName, String email, Car car) {
+
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.email = email;
+      this.car = car;
    }
 
    public Long getId() {
@@ -57,5 +69,24 @@ public class User {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+
+   public Car getCar() {
+      return car;
+   }
+
+   public User setCar(Car car) {
+      car.setUser(this);
+      this.car = car;
+      return this;
+   }
+
+   @Override
+   public String toString() {
+      return "User:\n" +
+              "firstName = " + firstName + '\n' +
+              "lastName = " + lastName + '\n' +
+              "email = " + email + '\n' +
+              "car = " + car;
    }
 }
